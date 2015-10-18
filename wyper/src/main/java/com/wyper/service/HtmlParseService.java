@@ -1,8 +1,10 @@
 package com.wyper.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -55,7 +57,7 @@ public class HtmlParseService {
 			try {
 				String picurl = e.select("img").attr("src");
 				if(!StringUtils.isEmpty(picurl)){
-					System.out.println(picurl);
+					System.out.println("download...   "+picurl);
 					DownUtil.download(e.select("img").attr("src"),htmlname+"0"+index_num+".jpg", PathUtil.path(pd));
 					e.select("img").attr("src", "http://"+PathUtil.url(pd)+htmlname+"0"+index_num+".jpg");
 					index_num++;
@@ -65,12 +67,20 @@ public class HtmlParseService {
 			}
 			html+="<p>"+e.html()+"</p>\n";
 		}
+		//System.out.println(html);
 		
-		System.out.println(html);
 		content.setS_content(html);
 		content.setUrl(PathUtil.url(pd) + htmlname+".html");
 		//dbService.save("t_"+pd, content);
 		freeMarkerService.genHtml(htmlname+".html", pd, content);
+		System.out.println(content.getUrl());
+		
+		try {
+			FileUtils.write(new File(PropertisUtil.get("output")), content.getUrl()+"\n", true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return content;
 	}
 	
