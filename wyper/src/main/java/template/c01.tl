@@ -114,10 +114,10 @@ function showpic(index,url){
                  </dl>
 			</div>
         
-       <!--#include virtual="/jk/info_r1.shtml" -->
-			 <!--#include virtual="/jk/info_ad_r1.shtml" -->
-			 <!--#include virtual="/jk/info_r2.shtml" -->
-			 <!--#include virtual="/jk/info_ad_r2.shtml" -->
+			<!--#include virtual="/ad/info_r1.shtml" -->
+			<!--#include virtual="/ad/info_ad_r1.shtml" -->
+			<!--#include virtual="/ad/info_r2.shtml" -->
+			<!--#include virtual="/ad/info_ad_r2.shtml" -->
 		</div>
 	</div>
 </div>

@@ -11,9 +11,10 @@ public class DownUtil {
 
 	
 public static void download(String urlString, String filename,String savePath) throws Exception {  
-        URL url = new URL(urlString);  
-        URLConnection con = url.openConnection();  
-        con.setConnectTimeout(10*1000);  
+        URL url = new URL(urlString);
+        URLConnection con = url.openConnection();
+        con.setConnectTimeout(50*1000);
+        con.setReadTimeout(50*1000);
         InputStream is = con.getInputStream();
         
         byte[] bs = new byte[1024];
