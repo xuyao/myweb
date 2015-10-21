@@ -67,7 +67,9 @@ public class HtmlParseService {
 			}
 			if(!e.select("img").isEmpty() || e.text().contains("图片来源")){
 				html+="<p align=center>"+e.html()+"</p>\n";
-			}else if(e.text().contains("下一页")){
+			}else if(e.text().contains("下一页") || e.text().contains("责任编辑")
+					|| e.text().contains("网站地图") || e.text().contains("广告合作")
+					|| e.text().contains("友情链接") || e.text().contains("联系我们")){
 				//如果段落里包括“下一页”之类的，直接跳过
 			}else{//一般情况
 				html+="<p>"+e.html()+"</p>\n";

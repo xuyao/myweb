@@ -88,7 +88,7 @@ function showpic(index,url){
     		<a href="http://v.t.qq.com/share/share.php?url=${url}&title=${title}" target="_blank" class="bio_button_sina pull-left ie6png r-10 ">腾讯微博</a> 
 			<a href="http://tieba.baidu.com/f/commit/share/openShareApi?url=${url}&title=hello&desc=&pic=" target="_blank" class="bio_button_sina pull-left ie6png r-10 ">百度贴吧</a>
 			<a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${url}" target="_blank" class="bio_button_sina pull-left ie6png r-10 ">QQ空间</a>
-			<a class="bio_button_sina pull-left ie6png r-10" href="javascript:void(0)" onmouseover="showpic(0,'${url}');">
+			<a class="bio_button_sina pull-left ie6png r-10" href="javascript:void(0)" onmouseover="showpic(0,'http://${url}');">
 			微信扫一扫<div id="pic0" class="qr on" style="display:none"><br>
 				<div id="wx0" style=" position:relative;z-index:99999;"/></div>
 			</div></a> 
