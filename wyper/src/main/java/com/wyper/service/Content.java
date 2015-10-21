@@ -13,6 +13,16 @@ public class Content {
 	private String ctime;
 	
 	private String url;
+	
+	private String urlm;
+	
+	public String getUrlm() {
+		return urlm;
+	}
+
+	public void setUrlm(String urlm) {
+		this.urlm = urlm;
+	}
 
 	public Integer getId() {
 		return id;

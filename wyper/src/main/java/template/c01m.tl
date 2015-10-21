@@ -39,7 +39,8 @@ function showpic(index,url){
 	</div>
     
     <div class="top-div">
-		<!--#include virtual="/i_s/adtop.shtml" -->
+    <div class="container clearfix">
+		<!--#include virtual="/ad/m/adtop.shtml" -->
 	</div>
 	</div>
 </div>
@@ -114,15 +115,15 @@ function showpic(index,url){
                  </dl>
 			</div>
         
-			<!--#include virtual="/ad/info_r1.shtml" -->
-			<!--#include virtual="/ad/info_ad_r1.shtml" -->
-			<!--#include virtual="/ad/info_r2.shtml" -->
-			<!--#include virtual="/ad/info_ad_r2.shtml" -->
+			<!--#include virtual="/ad/m/info_r1.shtml" -->
+			<!--#include virtual="/ad/m/info_ad_r1.shtml" -->
+			<!--#include virtual="/ad/m/info_r2.shtml" -->
+			<!--#include virtual="/ad/m/info_ad_r2.shtml" -->
 		</div>
 	</div>
 </div>
 
-<!--#include virtual="/ad_footer.shtml" -->
+<!--#include virtual="/ad/m/ad_footer.shtml" -->
 </div>
 <!--#include virtual="/i_s/footer.shtml" -->
 </body>
