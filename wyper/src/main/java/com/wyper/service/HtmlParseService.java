@@ -79,6 +79,7 @@ public class HtmlParseService {
 		
 		content.setS_content(html);
 		content.setUrl(PathUtil.url(pd) + htmlname+".html");
+		content.setUrlm(PathUtil.url(pd) + htmlname+"m.html");
 		//dbService.save("t_"+pd, content);
 		freeMarkerService.genHtml(htmlname+".html", pd, content);
 		System.out.println(content.getUrl());

@@ -19,8 +19,22 @@ public class FreeMarkerService {
 		args.put("title", c.getTitle());
 		args.put("content", c.getS_content());
 		args.put("url", c.getUrl());
-		
+		args.put("urlm", c.getUrlm());
 		FreeMarkerUtil.crateFile(args, "c01.tl", PathUtil.path(pd)+File.separator+filename, true);
 		
 	}
+	
+	
+	public void genHtmlMobile(String filename, String pd, Content c){
+		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
+		Map<String, Object> args = new HashMap<String, Object>(); 
+		args.put("title", c.getTitle());
+		args.put("content", c.getS_content());
+		args.put("url", c.getUrl());
+		args.put("urlm", c.getUrlm());
+		FreeMarkerUtil.crateFile(args, "c01m.tl", PathUtil.path(pd)+File.separator+filename, true);
+		
+	}
+	
+	
 }
