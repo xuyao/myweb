@@ -13,6 +13,7 @@ public class DownUtil {
 public static void download(String urlString, String filename,String savePath) throws Exception {  
         URL url = new URL(urlString);
         URLConnection con = url.openConnection();
+        con.setRequestProperty("User-agent", UserAgent.userAgent);
         con.setConnectTimeout(50*1000);
         con.setReadTimeout(50*1000);
         InputStream is = con.getInputStream();

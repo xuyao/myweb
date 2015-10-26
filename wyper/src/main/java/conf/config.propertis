@@ -1,6 +1,6 @@
-www.url=www.51per.com
+www.url=dy.51per.com
 www.path=/home/www/
-tl.content.path=/home/work/template
-#tl.content.path=E:\\home\\work\\template
+#tl.content.path=/home/work/template
+tl.content.path=E:\\home\\work\\template
 
 output=/home/www/info/l.txt

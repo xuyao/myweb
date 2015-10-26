@@ -5,7 +5,6 @@
 <!--#include virtual="/keyword.shtml"--><!--#include virtual="/css_js.shtml"-->
 <link rel="stylesheet" type="text/css" href="/style/info.css"/>
 <script src="/js/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/js/down.js" type="text/javascript" charset="utf-8"></script>
 <script>
 function showpic(index,url){
     if($(eval("pic"+index)).css('display')=='block'){
@@ -54,7 +53,12 @@ function showpic(index,url){
 	                        </div>
 		</div>
 		<div class="view-main t-20 pl-25 pr-25">
-	    	<div class="view-content" style="margin-top: 18px;">${content}</div>
+	    	<div class="view-content" style="margin-top: 18px;">
+	    	<script language="javascript">
+	    	${content}
+			</script>
+	    	<!--#include virtual="/js/xg_js.shtml" -->
+	    	</div>
 		</div> 
 	  	<!--[if IE 6]> <a class="follow-btn ie6png mmmzw"></a><![endif]-->
 	  	<p style="font-size:10"><b>版权声明</b>：51电影（www.51per.com）为非赢利性电影站点，所有影音影视资源来源于互联网相关电影站点自动搜索采集信息，相关链接已经注明来源。<br /><b>免责声明</b>：51电影（www.51per.com）将逐步删除和规避程序自动搜索采集到的不提供分享的版权电影资源。本站仅供广电影好爱好者测试和学习交流，如有侵权请及时通知我们，我们会及时删除，另外请大家支持正版的影视资源。</p>
