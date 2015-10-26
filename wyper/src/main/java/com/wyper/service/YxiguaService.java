@@ -17,9 +17,11 @@ import com.wyper.util.DateUtil;
 import com.wyper.util.DownUtil;
 import com.wyper.util.PathUtil;
 import com.wyper.util.PropertisUtil;
+import com.wyper.util.UserAgent;
+import com.wyper.vo.Content;
 
 @Service
-public class HtmlParseService {
+public class YxiguaService {
 	
 	@Autowired
 	DbService dbService ;
@@ -31,11 +33,11 @@ public class HtmlParseService {
 	 * 	arg 1: 频道
 	 *  arg 2：网页路径
 	 * */
-	public Content parseHtml(String htmlname, String pd, String path){
+	public Content parseHtml(String htmlname, String path){
 		Content content = new Content();
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(path).timeout(10000).get();
+			doc = Jsoup.connect(path).header("User-Agent", UserAgent.userAgent).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,34 +56,54 @@ public class HtmlParseService {
 		for (Iterator<Element> it = p.iterator(); it.hasNext();){
 			Element e = (Element) it.next();
 			e.select("a").attr("href", "http://"+PropertisUtil.get("www.url"));
+			
+			if(e.text().contains("下载") || e.text().contains("关键字"))//排除一些情况
+				continue;
+			
+			if(e.select("input").attr("value").contains("thunder:"))//排除thunder
+				continue;
+			
 			try {
 				String picurl = e.select("img").attr("src");
 				if(!StringUtils.isEmpty(picurl)){
 					System.out.println("download...   "+picurl);
-					DownUtil.download(e.select("img").attr("src"),htmlname+"0"+index_num+".jpg", PathUtil.path(pd));
-					e.select("img").attr("src", "http://"+PathUtil.url(pd)+htmlname+"0"+index_num+".jpg");
+					DownUtil.download(e.select("img").attr("src"),htmlname+"0"+index_num+".jpg", PathUtil.path());
+					e.select("img").attr("src", "http://"+PathUtil.url()+htmlname+"0"+index_num+".jpg");
 					index_num++;
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			if(!e.select("img").isEmpty() || e.text().contains("图片来源")){
-				html+="<p align=center>"+e.html()+"</p>\n";
-			}else if(e.text().contains("下一页") || e.text().contains("责任编辑")
-					|| e.text().contains("网站地图") || e.text().contains("广告合作")
-					|| e.text().contains("友情链接") || e.text().contains("联系我们")){
-				//如果段落里包括“下一页”之类的，直接跳过
-			}else{//一般情况
-				html+="<p>"+e.html()+"</p>\n";
-			}
+			
+			html+="<p>"+e.html()+"</p>\n";
+			
 		}
-		//System.out.println(html);
+		
+		//内容简介
+		html+="<p>"+doc.select(".vod_content").text().replaceAll("一个西瓜电影网", "51电影网")+"</p>\n";
+		
+		//迅雷下载
+		html+="<p><b>迅雷下载：&nbsp</b>";
+		Elements thunders = doc.select(".dwon_xl");
+		for (Iterator<Element> it = thunders.iterator(); it.hasNext();){
+			Element thunder = (Element) it.next().select("a").get(0);
+			html+="<a target='_self' onclick='return beginDown(this,1);' href='"+thunder.attr("value")+"'><u>"+thunder.text()+"</u></a>&nbsp;&nbsp;\n";
+		}
+		html+="</p>";
+		
+		//西瓜下载
+		html+="<p><b>西瓜影音下载：&nbsp</b>";
+		
+		//吉吉影音
+		html+="<p><b>吉吉影音下载：&nbsp</b>";
+		
+		//快播下载
+		html+="<p><b>快播下载：&nbsp</b>";
 		
 		content.setS_content(html);
-		content.setUrl(PathUtil.url(pd) + htmlname+".html");
-		content.setUrlm(PathUtil.url(pd) + htmlname+"m.html");
+		content.setUrl(PathUtil.url() + htmlname+".html");
 		//dbService.save("t_"+pd, content);
-		freeMarkerService.genHtml(htmlname+".html", pd, content);
+		freeMarkerService.genHtml(htmlname+".html", content);
 		System.out.println(content.getUrl());
 		
 		try {
@@ -103,6 +125,7 @@ public class HtmlParseService {
 	
 	private void setTitle(Content content, Document doc){
 		Elements p = doc.select("h1");
+		System.out.println(p.text());
 		content.setTitle(p.text());
 	}
 	
