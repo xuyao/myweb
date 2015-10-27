@@ -5,21 +5,43 @@ import java.util.Date;
 
 public class PathUtil {
 
-	/* 返回url */
-	public static String url(){
-		Date d = new Date();
-		String url = PropertisUtil.get("www.url")+"/"+DateUtil.format(d, 
+	/* 绝对路径url 带http*/
+	public static String absUrl(Date d){
+		String url = "http://"+PropertisUtil.get("www.url")+"/"+DateUtil.format(d, 
 				DateUtil.YEAR_PATTERN)+"/"+DateUtil.format(d, DateUtil.Month_PATTERN)+"/"+DateUtil.format(d, 
 						DateUtil.Day_PATTERN)+"/";
 		return url;
 	}
 	
-	/* 返回path */
-	public static String path(){
-		Date d = new Date();
+	
+	/* 相对路径url */
+	public static String rltUrl(Date d){
+		String url = "/"+DateUtil.format(d, DateUtil.YEAR_PATTERN)+"/"+DateUtil.format(d, DateUtil.Month_PATTERN)
+				+"/"+DateUtil.format(d, DateUtil.Day_PATTERN)+"/";
+		return url;
+	}
+	
+	
+	/* 文件生成路径path */
+	public static String path(Date d){
 		String path = PropertisUtil.get("www.path") + File.separator + DateUtil.format(d, 
 				DateUtil.YEAR_PATTERN) + File.separator + DateUtil.format(d, DateUtil.Month_PATTERN) + 
 				File.separator + DateUtil.format(d, DateUtil.Day_PATTERN)+File.separator;
+		return path;
+		
+	}
+	
+	
+	/* 电影list文件生成路径path */
+	public static String listMoviesPath(){
+		String path = PropertisUtil.get("www.path.mlist");
+		return path;
+		
+	}
+	
+	/* 电视剧list文件生成路径path */
+	public static String listTVPath(){
+		String path = PropertisUtil.get("www.path.tlist");
 		return path;
 		
 	}

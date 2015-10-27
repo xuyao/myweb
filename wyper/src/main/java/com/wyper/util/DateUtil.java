@@ -1,7 +1,7 @@
 package com.wyper.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -13,7 +13,7 @@ public class DateUtil {
 		minute,hour,day,month,year
 	}
 	
-	public static final String LONG_PATTERN = "yyyy-MM-dd HH:mm:ss";
+	public static final String LONG_PATTERN = "yyyy-MM-dd HH:mm:ss.sss";
 	public static final String STR_DATE_PATTERN = "yyyyMMdd";
 	public static final String LONGID = "yyyyMMddHHmmss";
 	public static final String YEAR_PATTERN = "yyyy";
@@ -45,6 +45,21 @@ public class DateUtil {
 		return new Date();
 	}
 
+	
+	//返回日期
+	public static Date getDate(String ctime, String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Date d = null;
+		try {
+			d = sdf.parse(ctime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return d;
+	}
+	
+	
 	public static void main(String[] args) {
 		System.out.println(new Date().getTime());
 		System.out.println(DateUtil.format(new Date(1417868141515l), DateUtil.LONG_PATTERN));
