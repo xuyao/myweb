@@ -1,6 +1,6 @@
 www.url=dy.51per.com
 www.path=/home/www/
 #tl.content.path=/home/work/template
-tl.content.path=E:\\home\\work\\template
+tl.content.path=E:\\git\\myweb\\wyper\\src\\main\\java\\template
 
 output=/home/www/info/l.txt
