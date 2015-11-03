@@ -4,9 +4,9 @@ public class JJ {
 //	var jjvod_url = 'jjhd://20000|b50f7b06236a68f4d62b8f2ff64b39ebf88baece|侏罗纪世界2015.HD修正中字.720p.mkv';//播放视频地址
 	private String jjvod_url;
 	
-	private String jjvod_w = "840";
+	private String jjvod_w = "650";
 	
-	private String jjvod_h = "680";
+	private String jjvod_h = "410";
 	
 	private String jjvod_ad = "";
 	

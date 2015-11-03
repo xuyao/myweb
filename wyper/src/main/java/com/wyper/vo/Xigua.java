@@ -14,9 +14,9 @@ public class Xigua {
 	
 	private String Pase="";// 暂停AD，需更改
 	
-	private String Width ="840";// 播放器显示宽度
+	private String Width ="680";// 播放器显示宽度
 	
-	private String Height ="680";// 播放器显示高度
+	private String Height ="490";// 播放器显示高度
 	
 	private String Second ="8";// 缓冲时间
 	

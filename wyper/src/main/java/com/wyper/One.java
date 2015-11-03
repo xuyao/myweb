@@ -7,8 +7,15 @@ import com.wyper.service.SpiderService;
 import com.wyper.util.NumberTools;
 
 /**
- * 	参数 1：支持网址
- * 	参数 2：网址url
+ * 	参数1：网址www.xxx.com
+ * 	参数2：网址类型：m or t 电影或电视剧
+ *  参数3：url 源网址的url
+ *  参数4：number 生成的3位随机文件名
+ *  参数5：ctime 数据库记录创建时间
+ *  
+ * 
+ * 
+ * 
  *  支持网址:www.yxigua.com,
  * 
  * */
@@ -19,21 +26,28 @@ public class One {
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:conf/applicationContent.xml");
     	SpiderService spiderService = (SpiderService)context.getBean("spiderService");
     	
-    	if(args.length<2){
+    	if(args.length<3){
     		System.out.println("参数错误！");
     		System.exit(0);
     	}
     	
 		String wwwName = args[0];//决定用哪种解析
-		String url = args[1];
+		String type = args[1];//m-电影  t-电视剧tv
+		String url = args[2];
 		String number = null;
-		if(args.length==3)
-			number = args[2];
+		String ctime = null;
+		if(args.length>=4){
+			number = args[3];
+			if(args.length>=5)
+				ctime = args[4];//时间设置，确定列表顺序
+		}
 		else
 			number = NumberTools.randomNumber(3);//随机生成3位数字做文件名
-			
-		spiderService.parseHtml(wwwName, url, number);
+		
+		spiderService.parseHtml(wwwName, type, url, number, ctime, null, true);
 		
     	System.exit(0);
     }
+    
+    
 }

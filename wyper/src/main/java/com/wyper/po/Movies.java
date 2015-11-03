@@ -15,6 +15,8 @@ public class Movies {
 	private String pic_url;//列表中的海报照片
 	
 	private String ctime;
+	
+	
 
 	public Integer getId() {
 		return id;

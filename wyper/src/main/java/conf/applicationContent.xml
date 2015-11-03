@@ -16,7 +16,7 @@
             destroy-method="close"> 
         <property name="driverClass" value="org.sqlite.JDBC"></property>
 		
-		<property name="jdbcUrl" value="jdbc:sqlite:E:\git\myweb\wyper\51per.db"></property>
+		<property name="jdbcUrl" value="jdbc:sqlite:E:\workspace\myweb\wyper\51per.db"></property>
 		<!-- 
 			<property name="jdbcUrl" value="jdbc:sqlite:/home/51per.db"></property> 
 		-->
