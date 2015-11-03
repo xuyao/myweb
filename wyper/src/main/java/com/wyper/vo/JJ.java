@@ -6,7 +6,7 @@ public class JJ {
 	
 	private String jjvod_w = "650";
 	
-	private String jjvod_h = "460";
+	private String jjvod_h = "410";
 	
 	private String jjvod_ad = "";
 	

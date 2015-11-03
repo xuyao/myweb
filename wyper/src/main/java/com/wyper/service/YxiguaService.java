@@ -47,7 +47,7 @@ public class YxiguaService {
 		Document doc = null;
 		
 		try {
-			doc = Jsoup.connect(url).header("User-Agent", UserAgent.userAgent).get();
+			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -219,7 +219,7 @@ public class YxiguaService {
 		}
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(url).header("User-Agent", UserAgent.userAgent).get();
+			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -254,7 +254,7 @@ public class YxiguaService {
 		}
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(url).header("User-Agent", UserAgent.userAgent).get();
+			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

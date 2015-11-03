@@ -54,13 +54,13 @@ function showpic(index,url){
 	                        </div>
 		</div>
 		<div class="view-main t-0 pl-25 pr-25">
-	    	<div class="view-content" style="float:left;margin-top:18px;">
+	    	<div class="view-content" style="float:left;margin-top:5px">
 	    	<script language="javascript">
 	    	${content}
 			</script>
 	    	<!--#include virtual="/js/jj_js.shtml" -->
 	    	</div>
-	    	<!--#include virtual="/ad/content_ad_xg_01.shtml" -->
+	    	<!--#include virtual="/ad/content_ad_jj_01.shtml" -->
 			<div style="clear:both;padding-top:5px;">
 			<!--#include virtual="/ad/content_ad_02.shtml" -->
 	    	</div>
