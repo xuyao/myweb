@@ -63,6 +63,15 @@ public class NumberTools {
 		return sf.toString();
 	}
 	
+	public static Integer randomIneger(int length){
+		Random random = new Random();
+		Integer num = -1;
+		for (int i = 0; i < length; i++) {
+			num = random.nextInt(10);// 0~9
+		}
+		return num;
+	}
+	
 	
 	public static void main(String[] args) {
 		try {

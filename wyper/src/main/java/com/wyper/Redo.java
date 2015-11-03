@@ -32,7 +32,11 @@ public class Redo {
     	String name = args[2];
     	String mtime = args[3];
     	
-    	Movies m = dbService.queryMovies(name);
+    	Movies m = null;
+    	if("m".equals(type))
+    		m = dbService.queryMovies(name);
+    	else if("t".equals(type))
+    	    m = dbService.queryTV(name);
     	
 		String src_url = m.getSrc_url();
 		String html_url = m.getHtml_url();

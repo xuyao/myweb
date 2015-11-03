@@ -54,7 +54,7 @@ function showpic(index,url){
 	                        </div>
 		</div>
 		<div class="view-main t-5 pl-25 pr-25">
-	    	<div class="view-content" style="float:left;margin-top:18px;">
+	    	<div class="view-content" style="float:left;margin-top:5px">
 	    	<script language="javascript">
 	    	${content}
 			</script>
