@@ -1,12 +1,9 @@
 package com.wyper.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -14,7 +11,7 @@ import org.springframework.util.StringUtils;
 import com.wyper.po.Mdown;
 import com.wyper.po.Movies;
 import com.wyper.util.DateUtil;
-import com.wyper.util.PropertisUtil;
+import com.wyper.util.PathUtil;
 import com.wyper.vo.JJ;
 import com.wyper.vo.Xigua;
 
@@ -38,16 +35,18 @@ public class SpiderService {
 	public void listHtml(String type){
 		System.out.println("生成"+type+" list列表...");
 		List<Movies> list = null;
+		list = dbService.listMovies(type, 28);
+		String path = "";
 		if("m".equals(type)){
-			list = dbService.listMovies(28);
-			freeMarkerService.genMoviesListHtml(list);
+			path = PathUtil.listMoviesPath();
 		}
 		else if("t".equals(type)){
-			list = dbService.listTV(28);
-			freeMarkerService.genTVListHtml(list);
+			path = PathUtil.listTVPath();
 		}
 		else
 			System.out.println("参数错误，请输入m或者t！");
+		
+		freeMarkerService.genMoviesListHtml(list, path);
 		
 	}
 	
@@ -58,6 +57,8 @@ public class SpiderService {
 	public void parseHtml(String wwwName, String type, String url, String number, String ctime, 
 			String mtime, boolean isSave){
 		Movies movie = new Movies();
+		movie.setType(type);//类型m或者t
+		
 		List<Mdown> mdownList = new ArrayList<Mdown>();
 		Date d = null;
 		if(!StringUtils.isEmpty(mtime))
@@ -74,10 +75,7 @@ public class SpiderService {
 		//生成文件并入数据库
 		freeMarkerService.genHtml(number+".html", movie, d);
 		if(isSave){
-			if("m".equals(type))
-				id = dbService.saveMovies(movie);
-			else if("t".equals(type))
-				id = dbService.saveTV(movie);
+			id = dbService.saveMovies(movie);
 		}
 			
 		
@@ -85,32 +83,33 @@ public class SpiderService {
 		Integer i_jj=1;
 		for(Mdown mdown : mdownList){
 			mdown.setMovies_id(id);
+			
+			if(mdown.getType().equals("0")){//迅雷下载
+				Integer count = dbService.countMdown("tb_xl", mdown.getDown_url());
+				if(count==0)//如果库里没有这个迅雷链接
+					dbService.saveMdown("tb_xl", mdown);//保存迅雷
+			}
 			if(mdown.getType().equals("1")){//生成西瓜下载页面
 				Xigua xigua = new Xigua();
 				xigua.setUrl(mdown.getDown_url());
 				freeMarkerService.genXiguaHtml(number+"_xg"+i_xg+".html", mdown, xigua, d);
+				Integer count = dbService.countMdown("tb_xg", mdown.getDown_url());
+				if(count==0)//如果库里没有这个西瓜链接
+					dbService.saveMdown("tb_xg", mdown);//保存西瓜
 				i_xg++;
+				
 			}
 			if(mdown.getType().equals("2")){//生成吉吉下载页面
 				JJ jj = new JJ();
 				jj.setJjvod_url(mdown.getDown_url());
 				freeMarkerService.genJJHtml(number+"_jj"+i_jj+".html", mdown, jj, d);
+				Integer count = dbService.countMdown("tb_jj", mdown.getDown_url());
+				if(count==0)//如果库里没有这个吉吉链接
+					dbService.saveMdown("tb_jj", mdown);//保存吉吉
 				i_jj++;
 			}
 			
-			if(isSave){
-				if("m".equals(type))
-					dbService.saveMdown(mdown);
-				else if("t".equals(type))
-					dbService.saveTV(mdown);
-			}
 		}
-		
-//		try {
-//			FileUtils.write(new File(PropertisUtil.get("output")), movie.getHtml_url()+"\n", true);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 		
 	}
 	

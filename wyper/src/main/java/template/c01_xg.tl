@@ -64,7 +64,7 @@ function showpic(index,url){
 			<div style="clear:both;padding-top:5px;">
 			<!--#include virtual="/ad/content_ad_02.shtml" -->
 			</div>
-	    	<p style="font-size:10;clear:both;padding-top:18px;"><b>版权声明</b>：51电影（www.51per.com）为非赢利性电影站点，所有影音影视资源来源于互联网相关电影站点自动搜索采集信息，相关链接已经注明来源。<br /><b>免责声明</b>：51电影（www.51per.com）将逐步删除和规避程序自动搜索采集到的不提供分享的版权电影资源。本站仅供广电影好爱好者测试和学习交流，如有侵权请及时通知我们，我们会及时删除，另外请大家支持正版的影视资源。</p>
+			<!--#include virtual="/note.shtml" -->
 		</div> 
 	  	<!--[if IE 6]> <a class="follow-btn ie6png mmmzw"></a><![endif]-->
 	</div>
@@ -77,13 +77,13 @@ function showpic(index,url){
 	    		<a href="http://v.t.qq.com/share/share.php?url=${html_url}&title=${name}" target="_blank" class="bio_button_sina pull-left ie6png r-10 ">腾讯微博</a> 
 				<a href="http://tieba.baidu.com/f/commit/share/openShareApi?url=${html_url}&title=hello&desc=&pic=" target="_blank" class="bio_button_sina pull-left ie6png r-10 ">百度贴吧</a>
 				<a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${html_url}" target="_blank" class="bio_button_sina pull-left ie6png r-10 ">QQ空间</a>
-				<a class="bio_button_sina pull-left ie6png r-10" href="javascript:void(0)" onmouseover="showpic(0,'${html_url}');">
+				<a class="bio_button_sina pull-left ie6png r-10" href="javascript:void(0)" onclick="return false;" onmouseover="showpic(0,'${html_url}');">
 				微信扫一扫<div id="pic0" class="qr on" style="display:none"><br>
 					<div id="wx0" style=" position:relative;z-index:99999;"/></div>
 				</div></a> 
 	    	</div>
 	    	<div style="margin-top: 3px; margin-left: 20px;" class="pull-right">
-	    		<iframe width="136" scrolling="no" height="24" frameborder="0" src="http://widget.weibo.com/relationship/followbutton.php?language=zh_cn&amp;width=116&amp;height=24&amp;uid=2117966477&amp;style=2&amp;btn=red&amp;dpc=0" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+	    		<iframe width="136" scrolling="no" height="24" frameborder="0" src="http://widget.weibo.com/relationship/followbutton.php?language=zh_cn&amp;width=116&amp;height=24&amp;uid=5747051749&amp;style=2&amp;btn=red&amp;dpc=0" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
 	    	</div>					
 	    </div>
 	</div>

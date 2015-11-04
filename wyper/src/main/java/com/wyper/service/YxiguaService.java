@@ -1,11 +1,10 @@
 package com.wyper.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -22,6 +21,7 @@ import com.wyper.po.Mdown;
 import com.wyper.po.Movies;
 import com.wyper.util.DateUtil;
 import com.wyper.util.DownUtil;
+import com.wyper.util.ImgUtil;
 import com.wyper.util.PathUtil;
 import com.wyper.util.PropertisUtil;
 import com.wyper.util.UserAgent;
@@ -65,7 +65,7 @@ public class YxiguaService {
 			
 		p.select("span").remove();
 		String html = "";
-		Integer index_num=0;
+		Integer index_num=1;
 		for (Iterator<Element> it = p.iterator(); it.hasNext();){
 			Element e = (Element) it.next();
 			
@@ -85,7 +85,8 @@ public class YxiguaService {
 				picurl = e.select("img").attr("src");
 				if(!StringUtils.isEmpty(picurl)){
 					System.out.println("download...   "+picurl);
-					DownUtil.download(e.select("img").attr("src"),number+"0"+index_num+".jpg", PathUtil.path(d));
+					/* 第一个文章页图片，用01，00是给列表用的*/
+					DownUtil.download(e.select("img").attr("src"),number+"0"+index_num+".jpg", PathUtil.path(d));//
 					e.select("img").attr("src", PathUtil.absUrl(d)+number+"0"+index_num+".jpg");
 					e.select("img").attr("width", "300");
 					e.select("img").attr("height", "410");
@@ -102,6 +103,14 @@ public class YxiguaService {
 			else
 				html+="<p>"+e.html()+"</p>\n";
 		}
+		
+		//生成首页图片
+		try {
+			ImgUtil.resize(new File(PathUtil.path(d)+number+"01.jpg"), PathUtil.path(d)+number+"00.jpg", 131, 203);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		//ad
 		html+="";
 		
@@ -116,19 +125,19 @@ public class YxiguaService {
 		html+="<div style=\"clear:both;padding-top:18px;\">";
 		Elements thunders = doc.select(".dwon_xl");
 		if(thunders!=null && thunders.hasText())
-			html+="<p><b>"+movie.getName()+"迅雷下载：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
+			html+="<p><b>"+movie.getName()+"迅雷下载（如果迅雷无法识别，请右键点击资源复制链接）：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
 		
 		for (Iterator<Element> it = thunders.iterator(); it.hasNext();){
 			System.out.println("迅雷下载!");
 			Element thunder = (Element) it.next().select("a").get(0);
 			html+="<a target='_self' onclick='return beginDown(this,1);' href='"+thunder.attr("href")+"'><u>"+thunder.text()+"</u></a><br>";
 		}
-		html+="</p>";
+		if(thunders!=null && thunders.hasText())
+			html+="</p>";
 		
 		
 		//西瓜、吉吉下载等
 		Elements box2 = doc.select(".box2");
-		Map<String,String> map = new HashMap<String,String>();
 		Element box2_first = box2.get(0);
 		Elements playlist = box2_first.select(".playlist");
 		Integer i = 0;
@@ -138,14 +147,13 @@ public class YxiguaService {
 			
 			//判断是否是西瓜
 			if(playlist_a.hasText() && isWhat.contains("西瓜")){//西瓜下载
-				html+="<p><b>"+movie.getName()+"西瓜影音下载：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
+				html+="<p><b>"+movie.getName()+"西瓜影音下载（如果西瓜无法识别，请右键点击资源复制链接到西瓜影音）：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
 				Integer xg_index=1;
 				for (Iterator<Element> it = playlist_a.iterator(); it.hasNext();){
 					Element a = it.next();
 					Mdown mdown = new Mdown();
 					mdown.setType("1");
 					String xiguaUrl = "http://www.yxigua.com"+a.attr("href");
-					mdown.setSrc_url(xiguaUrl);
 					mdown.setHtml_url(PathUtil.rltUrl(d)+number+"_xg"+xg_index+".html");
 					downUrlXigua(xiguaUrl, mdown);
 					mdown.setMname(a.text());
@@ -155,14 +163,13 @@ public class YxiguaService {
 				}
 				html+="</p>";
 			}else if(playlist_a.hasText() && isWhat.contains("吉吉")){//判断是否是吉吉下载
-				html+="<p><b>"+movie.getName()+"吉吉影音下载：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
+				html+="<p><b>"+movie.getName()+"吉吉影音下载（如果吉吉无法识别，请右键点击资源复制链接到吉吉影音）：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
 				Integer jj_index=1;
 				for (Iterator<Element> it = playlist_a.iterator(); it.hasNext();){
 					Element a = it.next();
 					Mdown mdown = new Mdown();
 					mdown.setType("2");
 					String jjUrl = "http://www.yxigua.com"+a.attr("href");
-					mdown.setSrc_url(jjUrl);
 					mdown.setHtml_url(PathUtil.rltUrl(d)+number+"_jj"+jj_index+".html");
 					downUrlJJ(jjUrl, mdown);
 					mdown.setMname(a.text());
@@ -177,7 +184,6 @@ public class YxiguaService {
 		html+="</div>";
 
 		
-		//BT下载
 //		html+="<p><b>"+movie.getName()+"BT下载：&nbsp</b></p>";
 //		html+="";
 		
@@ -203,7 +209,8 @@ public class YxiguaService {
 	private void setName(Movies movie, Document doc){
 		Elements p = doc.select("h1");
 		System.out.println(p.text());
-		movie.setName(p.text());
+		String name = p.text().replaceAll("《", "").replaceAll("》", "");
+		movie.setName(name);
 	}
 	
 	
@@ -233,6 +240,7 @@ public class YxiguaService {
 					JSONArray ja = playurls.getJSONArray(j);
 					if(url.contains((String)ja.get(2))){
 						mdown.setDown_url((String)ja.get(1));
+						System.out.println(mdown.getDown_url());
 						break;
 					}
 				}
@@ -274,13 +282,6 @@ public class YxiguaService {
 				}
 			}
 		}
-	}
-	
-	//判断是西瓜链接，还是吉吉，不太好判断
-	private String isWhat(){
-		
-		
-		return "xigua";
 	}
 	
 	

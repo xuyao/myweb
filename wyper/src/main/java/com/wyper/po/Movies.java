@@ -8,6 +8,8 @@ public class Movies {
 	
 	private String name;//电影名称
 	
+	private String type;
+	
 	private String content;//内容简介
 	
 	private String html_url;//生成url
@@ -40,6 +42,14 @@ public class Movies {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getContent() {

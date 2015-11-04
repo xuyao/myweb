@@ -2,6 +2,7 @@ package com.wyper;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.util.StringUtils;
 
 import com.wyper.service.SpiderService;
 import com.wyper.util.NumberTools;
@@ -13,10 +14,8 @@ import com.wyper.util.NumberTools;
  *  参数4：number 生成的3位随机文件名
  *  参数5：ctime 数据库记录创建时间
  *  
- * 
- * 
- * 
  *  支持网址:www.yxigua.com,
+ *  例子：com.wyper.One www.yxigua.com m http://www.yxigua.com/xiguayingyin/72970.html 100 "2000-10-29 00:00:01.000"
  * 
  * */
 public class One {
@@ -36,7 +35,7 @@ public class One {
 		String url = args[2];
 		String number = null;
 		String ctime = null;
-		if(args.length>=4){
+		if(args.length>=4 && !StringUtils.isEmpty(args[3])){
 			number = args[3];
 			if(args.length>=5)
 				ctime = args[4];//时间设置，确定列表顺序

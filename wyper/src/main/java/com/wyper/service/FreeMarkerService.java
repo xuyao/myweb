@@ -29,13 +29,21 @@ public class FreeMarkerService {
 		FreeMarkerUtil.crateFile(args, "c01.tl", PathUtil.path(d) + File.separator + filename, true);
 	}
 	
+	public void genHtml(Movies movie){
+		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
+		Map<String, Object> args = new HashMap<String, Object>(); 
+		args.put("name", movie.getName());
+		args.put("content", movie.getContent());
+		args.put("html_url", "http://" + PropertisUtil.get("www.url") + movie.getHtml_url());
+		FreeMarkerUtil.crateFile(args, "c01.tl", PropertisUtil.get("www.path") + movie.getHtml_url(), true);
+	}
 	
 	public void genXiguaHtml(String filename, Mdown mdown,  Xigua xigua, Date d){
 		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
 		Map<String, Object> args = new HashMap<String, Object>(); 
 		args.put("name", mdown.getMname());
 		args.put("content", xigua.toString());
-		args.put("html_url", mdown.getHtml_url());
+		args.put("html_url", "http://" + PropertisUtil.get("www.url") + mdown.getHtml_url());
 		FreeMarkerUtil.crateFile(args, "c01_xg.tl", PathUtil.path(d)+File.separator+filename, true);
 	}
 	
@@ -45,23 +53,16 @@ public class FreeMarkerService {
 		Map<String, Object> args = new HashMap<String, Object>(); 
 		args.put("name", mdown.getMname());
 		args.put("content", jj.toString());
-		args.put("html_url", mdown.getHtml_url());
+		args.put("html_url", "http://" + PropertisUtil.get("www.url") + mdown.getHtml_url());
 		FreeMarkerUtil.crateFile(args, "c01_jj.tl", PathUtil.path(d)+File.separator+filename, true);
 	}
 	
 	
-	public void genMoviesListHtml(List<Movies> list){
+	public void genMoviesListHtml(List<Movies> list, String path){
 		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
 		Map<String, Object> args = new HashMap<String, Object>(); 
 		args.put("ll", list);
-		FreeMarkerUtil.crateFile(args, "l.tl", PathUtil.listMoviesPath(), true);
-	}
-	
-	public void genTVListHtml(List<Movies> list){
-		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
-		Map<String, Object> args = new HashMap<String, Object>(); 
-		args.put("ll", list);
-		FreeMarkerUtil.crateFile(args, "l.tl", PathUtil.listTVPath(), true);
+		FreeMarkerUtil.crateFile(args, "l.tl", path, true);
 	}
 	
 	
