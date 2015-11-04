@@ -15,53 +15,69 @@ import com.wyper.util.PathUtil;
 import com.wyper.util.PropertisUtil;
 import com.wyper.vo.JJ;
 import com.wyper.vo.Xigua;
+import com.wyper.vo.DownLoad;
 
 @Service
 public class FreeMarkerService {
 
 	
-	public void genHtml(String filename, Movies movie, Date d){
+	public void genHtml(String filename, Movies movie, Date d, DownLoad dl){
 		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
 		Map<String, Object> args = new HashMap<String, Object>(); 
 		args.put("name", movie.getName());
 		args.put("content", movie.getContent());
+		args.put("xunlei", dl.getXunlei());
+		args.put("xigua", dl.getXigua());
+		args.put("jj", dl.getJj());
+		args.put("xf", dl.getXf());
 		args.put("html_url", "http://" + PropertisUtil.get("www.url") + movie.getHtml_url());
 		FreeMarkerUtil.crateFile(args, "c01.tl", PathUtil.path(d) + File.separator + filename, true);
 	}
 	
+	public void genHtml(Movies movie, DownLoad dl){
+		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
+		Map<String, Object> args = new HashMap<String, Object>(); 
+		args.put("name", movie.getName());
+		args.put("content", movie.getContent());
+		args.put("xunlei", dl.getXunlei());
+		args.put("xigua", dl.getXigua());
+		args.put("jj", dl.getJj());
+		args.put("xf", dl.getXf());
+		args.put("html_url", "http://" + PropertisUtil.get("www.url") + movie.getHtml_url());
+		FreeMarkerUtil.crateFile(args, "c01.tl", PropertisUtil.get("www.path") + movie.getHtml_url(), true);
+	}
 	
-	public void genXiguaHtml(String filename, Mdown mdown,  Xigua xigua, Date d){
+	
+	//生成西瓜影音最终页
+	public void genXiguaHtml(String path_filename, Mdown mdown,  Xigua xigua){
 		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
 		Map<String, Object> args = new HashMap<String, Object>(); 
 		args.put("name", mdown.getMname());
 		args.put("content", xigua.toString());
-		args.put("html_url", mdown.getHtml_url());
-		FreeMarkerUtil.crateFile(args, "c01_xg.tl", PathUtil.path(d)+File.separator+filename, true);
+		args.put("down_url", mdown.getDown_url());
+		args.put("mname", mdown.getMname());
+		args.put("html_url", "http://" + PropertisUtil.get("www.url") + mdown.getHtml_url());
+		FreeMarkerUtil.crateFile(args, "c01_xg.tl", path_filename, true);
 	}
 	
-	
-	public void genJJHtml(String filename, Mdown mdown, JJ jj, Date d){
+	//生成吉吉影音最终页
+	public void genJJHtml(String path_filename, Mdown mdown, JJ jj){
 		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
 		Map<String, Object> args = new HashMap<String, Object>(); 
 		args.put("name", mdown.getMname());
 		args.put("content", jj.toString());
-		args.put("html_url", mdown.getHtml_url());
-		FreeMarkerUtil.crateFile(args, "c01_jj.tl", PathUtil.path(d)+File.separator+filename, true);
+		args.put("down_url", mdown.getDown_url());
+		args.put("mname", mdown.getMname());
+		args.put("html_url", "http://" + PropertisUtil.get("www.url") + mdown.getHtml_url());
+		FreeMarkerUtil.crateFile(args, "c01_jj.tl", path_filename, true);
 	}
 	
 	
-	public void genMoviesListHtml(List<Movies> list){
+	public void genMoviesListHtml(List<Movies> list, String path){
 		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
 		Map<String, Object> args = new HashMap<String, Object>(); 
 		args.put("ll", list);
-		FreeMarkerUtil.crateFile(args, "l.tl", PathUtil.listMoviesPath(), true);
-	}
-	
-	public void genTVListHtml(List<Movies> list){
-		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
-		Map<String, Object> args = new HashMap<String, Object>(); 
-		args.put("ll", list);
-		FreeMarkerUtil.crateFile(args, "l.tl", PathUtil.listTVPath(), true);
+		FreeMarkerUtil.crateFile(args, "l.tl", path, true);
 	}
 	
 	

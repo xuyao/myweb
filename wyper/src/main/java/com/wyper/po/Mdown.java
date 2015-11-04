@@ -8,9 +8,7 @@ public class Mdown {
 	
 	private String mname;//下载电影名字
 	
-	private String type;//下载类型0-迅雷 、1-西瓜、2-吉吉、4-BT下载
-	
-	private String src_url;//原始页面路径
+	private String type;//不保存数据库，不持久  0--迅雷  1--西瓜  2--吉吉  3--先锋
 	
 	private String html_url;//本页面路径
 	
@@ -63,14 +61,5 @@ public class Mdown {
 	public void setHtml_url(String html_url) {
 		this.html_url = html_url;
 	}
-
-	public String getSrc_url() {
-		return src_url;
-	}
-
-	public void setSrc_url(String src_url) {
-		this.src_url = src_url;
-	}
-	
 
 }
