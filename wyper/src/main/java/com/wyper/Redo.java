@@ -9,16 +9,20 @@ import com.wyper.service.SpiderService;
 
 public class Redo {
 
+	private static ApplicationContext context;
+
 	/**
+	 * 从数据库里movies主表取数据然后生成html，会新增数据
+	 * 
 	 * 参数1：www.xxx.com
 	 * 参数2：type 电影类型 m-电影  t-电视剧
 	 * 参数3：电影名称 数据库字段name
 	 * 参数4：mtime 时间用于分目录 20151010
-	 * 这个类运行会从数据库里取数据然后生成html，用于模板调整，不会新增数据，新增数据用ReOne
+	 * 例子：com.wyper.Redo www.yxigua.com m 消失的世界  20151010
 	 * 
 	 * */
 	public static void main(String[] args){
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:conf/applicationContent.xml");
+		context = new ClassPathXmlApplicationContext("classpath:conf/applicationContent.xml");
     	SpiderService spiderService = (SpiderService)context.getBean("spiderService");
     	DbService dbService = (DbService)context.getBean("dbService");
     	
@@ -32,11 +36,7 @@ public class Redo {
     	String name = args[2];
     	String mtime = args[3];
     	
-    	Movies m = null;
-    	if("m".equals(type))
-    		m = dbService.queryMovies(name);
-    	else if("t".equals(type))
-    	    m = dbService.queryTV(name);
+    	Movies m = dbService.queryMovies(type, name);
     	
 		String src_url = m.getSrc_url();
 		String html_url = m.getHtml_url();
@@ -45,11 +45,6 @@ public class Redo {
 		String number = arr[arr.length-1];
 		
 		spiderService.parseHtml(wwwName, type, src_url, number, null, mtime, false);
-		try {
-			Thread.sleep(1000*3);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
     	
     	System.exit(0);	
 	}
