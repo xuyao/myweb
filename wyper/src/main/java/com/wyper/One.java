@@ -8,21 +8,25 @@ import com.wyper.service.SpiderService;
 import com.wyper.util.NumberTools;
 
 /**
- * 	参数1：网址www.xxx.com
- * 	参数2：网址类型：m or t 电影或电视剧
- *  参数3：url 源网址的url
- *  参数4：number 生成的3位随机文件名
- *  参数5：ctime 数据库记录创建时间
- *  
- *  支持网址:www.yxigua.com,
- *  例子：com.wyper.One www.yxigua.com m http://www.yxigua.com/xiguayingyin/72970.html 100 "2000-10-29 00:00:01.000"
+ * 生成主页，解析网页并且入库
+ * 	
+ * 参数1：网址www.xxx.com
+ * 参数2：网址类型：m or t 电影或电视剧
+ * 参数3：url 源网址的url
+ * 参数4：number 生成的3位随机文件名
+ * 参数5：ctime 数据库记录创建时间
+ * 
+ * 支持网址:www.yxigua.com,
+ * 
+ * 例子：com.wyper.One www.yxigua.com m http://www.yxigua.com/xiguayingyin/72970.html 100 "2000-10-29 00:00:01.000"
  * 
  * */
 public class One {
 	
-    public static void main(String[] args ){
-    	
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:conf/applicationContent.xml");
+    private static ApplicationContext context;
+    
+	public static void main(String[] args ){
+		context = new ClassPathXmlApplicationContext("classpath:conf/applicationContent.xml");
     	SpiderService spiderService = (SpiderService)context.getBean("spiderService");
     	
     	if(args.length<3){

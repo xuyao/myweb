@@ -71,7 +71,7 @@ public class DbService {
 	
 	//根据name查询电影tb_movies表
 	public Movies queryMovies(String type, String name){
-		Movies movies = jdbcTemplate.queryForObject("select id, src_url, name, type,content, html_url, pic_url, "
+		Movies movies = jdbcTemplate.queryForObject("select id, src_url, name, type, content, html_url, pic_url, "
 				+ "ctime from tb_movies where type=? and name=? order by ctime desc", 
 				new Object[]{type, name} ,new RowMapper<Movies>(){
 			public Movies mapRow(ResultSet rs, int index) throws SQLException {  
@@ -108,14 +108,13 @@ public class DbService {
 	//查询mdown
 	public List<Mdown> queryMdown(String tableName, Integer moviesId){
 		List<Mdown> list = jdbcTemplate.query("select id, movies_id, mname, html_url, down_url "
-				+ "from "+tableName+" where movies_id=?", 
+				+ "from "+tableName+" where movies_id=? order by id", 
 				new Object[]{moviesId}, new RowMapper<Mdown>(){
 			public Mdown mapRow(ResultSet rs, int index) throws SQLException {  
 				Mdown md = new Mdown();
 				md.setId(rs.getInt("id"));
 				md.setMovies_id(rs.getInt("movies_id"));
 				md.setMname(rs.getString("mname"));
-				md.setType(rs.getString("type"));
 				md.setHtml_url(rs.getString("html_url"));
 				md.setDown_url(rs.getString("down_url"));
                 return md;

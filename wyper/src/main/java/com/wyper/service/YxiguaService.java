@@ -2,6 +2,7 @@ package com.wyper.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ import com.wyper.util.ImgUtil;
 import com.wyper.util.PathUtil;
 import com.wyper.util.PropertisUtil;
 import com.wyper.util.UserAgent;
+import com.wyper.vo.DownLoad;
 
 /**
  * 	一个西瓜www.yxigua.com
@@ -38,16 +40,18 @@ public class YxiguaService {
 	@Autowired
 	FreeMarkerService freeMarkerService;
 	
+	@Autowired
+	DownloadHtmlService downloadHtmlService;
+	
 	/**
 	 * 	param 1：频道
 	 *  param 2：网页路径
 	 * */
-	public Movies parseHtml(String number, String url, String ctime, Movies movie, 
-			List<Mdown> mdownList, Date d){
+	public Movies parseHtml(String number, String url, String ctime, Movies movie, Date d, DownLoad dl){
 		Document doc = null;
 		
 		try {
-			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).get();
+			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).timeout(10000).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -64,7 +68,7 @@ public class YxiguaService {
 			movie.setCtime(ctime);
 			
 		p.select("span").remove();
-		String html = "";
+		StringBuilder html = new StringBuilder();
 		Integer index_num=1;
 		for (Iterator<Element> it = p.iterator(); it.hasNext();){
 			Element e = (Element) it.next();
@@ -98,10 +102,10 @@ public class YxiguaService {
 				e1.printStackTrace();
 			}
 			if(!StringUtils.isEmpty(picurl))
-				html+="<p><div style=\"float:left\">"+e.html()+
-				"</div></p><!--#include virtual=\"/ad/content_ad_01.shtml\" -->\n<div style=\"clear:both;padding-top:18px;\">";
+				html.append("<p><div style=\"float:left\">").append(e.html())
+				.append("</div></p><!--#include virtual=\"/ad/content_ad_01.shtml\" -->\n<div style=\"clear:both;padding-top:18px;\">");
 			else
-				html+="<p>"+e.html()+"</p>\n";
+				html.append("<p>").append(e.html()).append("</p>\n");
 		}
 		
 		//生成首页图片
@@ -111,29 +115,23 @@ public class YxiguaService {
 			e.printStackTrace();
 		}
 		
-		//ad
-		html+="";
-		
 		//内容简介
-		html+="<p>"+doc.select(".vod_content").text().replaceAll("一个西瓜电影网", "51电影网")+"</p>\n";
-		
-		//ad
-		html+="<!--#include virtual=\"/ad/content_ad_02.shtml\" -->";
+		html.append("<p>").append(doc.select(".vod_content").text().replaceAll("一个西瓜电影网", "51电影网")+"</p>\n");
 		
 		/** 下载链接  */
+		List<Mdown> mdownList = new ArrayList<Mdown>();
 		//迅雷下载
-		html+="<div style=\"clear:both;padding-top:18px;\">";
 		Elements thunders = doc.select(".dwon_xl");
-		if(thunders!=null && thunders.hasText())
-			html+="<p><b>"+movie.getName()+"迅雷下载（如果迅雷无法识别，请右键点击资源复制链接）：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
-		
 		for (Iterator<Element> it = thunders.iterator(); it.hasNext();){
-			System.out.println("迅雷下载!");
+			Mdown md = new Mdown();
 			Element thunder = (Element) it.next().select("a").get(0);
-			html+="<a target='_self' onclick='return beginDown(this,1);' href='"+thunder.attr("href")+"'><u>"+thunder.text()+"</u></a><br>";
+			md.setDown_url(thunder.attr("href"));
+			md.setMname(thunder.text());
+			md.setType("0");//迅雷
+			mdownList.add(md);
 		}
-		if(thunders!=null && thunders.hasText())
-			html+="</p>";
+		dl.getXunleiList().addAll(mdownList);
+		downloadHtmlService.xunleiHtml(movie, mdownList, dl);
 		
 		
 		//西瓜、吉吉下载等
@@ -147,7 +145,7 @@ public class YxiguaService {
 			
 			//判断是否是西瓜
 			if(playlist_a.hasText() && isWhat.contains("西瓜")){//西瓜下载
-				html+="<p><b>"+movie.getName()+"西瓜影音下载（如果西瓜无法识别，请右键点击资源复制链接到西瓜影音）：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
+				mdownList = new ArrayList<Mdown>();
 				Integer xg_index=1;
 				for (Iterator<Element> it = playlist_a.iterator(); it.hasNext();){
 					Element a = it.next();
@@ -158,12 +156,13 @@ public class YxiguaService {
 					downUrlXigua(xiguaUrl, mdown);
 					mdown.setMname(a.text());
 					mdownList.add(mdown);
-					html+="<a href='"+mdown.getHtml_url()+"'><u>"+mdown.getMname()+"</u></a>&nbsp;&nbsp;";
 					xg_index++;
 				}
-				html+="</p>";
+				dl.getXiguaList().addAll(mdownList);
+				downloadHtmlService.xiguaHtml(movie, mdownList, dl);
+				
 			}else if(playlist_a.hasText() && isWhat.contains("吉吉")){//判断是否是吉吉下载
-				html+="<p><b>"+movie.getName()+"吉吉影音下载（如果吉吉无法识别，请右键点击资源复制链接到吉吉影音）：&nbsp</b></p><p style='font-size:14px;color:#F00'>";
+				mdownList = new ArrayList<Mdown>();
 				Integer jj_index=1;
 				for (Iterator<Element> it = playlist_a.iterator(); it.hasNext();){
 					Element a = it.next();
@@ -171,24 +170,20 @@ public class YxiguaService {
 					mdown.setType("2");
 					String jjUrl = "http://www.yxigua.com"+a.attr("href");
 					mdown.setHtml_url(PathUtil.rltUrl(d)+number+"_jj"+jj_index+".html");
-					downUrlJJ(jjUrl, mdown);
+					downUrlJJ(jjUrl, mdown);//解析西瓜down_url
 					mdown.setMname(a.text());
 					mdownList.add(mdown);
-					html+="<a href='"+mdown.getHtml_url()+"'><u>"+mdown.getMname()+"</u></a>&nbsp;&nbsp;";
 					jj_index++;
 				}
-				html+="</p>";
+				dl.getJjList().addAll(mdownList);
+				downloadHtmlService.jjHtml(movie, mdownList, dl);
 			}
 			i++;
 		}
-		html+="</div>";
 
 		
-//		html+="<p><b>"+movie.getName()+"BT下载：&nbsp</b></p>";
-//		html+="";
-		
 		movie.setPic_url(PathUtil.rltUrl(d)+number+"00.jpg");
-		movie.setContent(html);
+		movie.setContent(html.toString());
 		movie.setSrc_url(url);//源url
 		movie.setHtml_url(PathUtil.rltUrl(d) + number+".html");
 		
@@ -226,7 +221,7 @@ public class YxiguaService {
 		}
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).get();
+			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).timeout(10000).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -262,7 +257,7 @@ public class YxiguaService {
 		}
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).get();
+			doc = Jsoup.connect(url).header("User-Agent", UserAgent.getUserAgent()).timeout(10000).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

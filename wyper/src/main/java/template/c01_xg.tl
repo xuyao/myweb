@@ -17,7 +17,7 @@ function showpic(index,url){
 </script>
 </head>
 <base target= _blank>
-<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false">
+<body>
 	<div class="navbar navbar-fixed-top" style="_position: relative;_z-index: 10000;">
 		<div class="navbar-inner">
 			<div class="container">
@@ -61,6 +61,8 @@ function showpic(index,url){
 	    	<!--#include virtual="/js/xg_js.shtml" -->
 	    	</div>
 	    	<!--#include virtual="/ad/content_ad_xg_01.shtml" -->
+	    	<div style="font-size:18px;color:red"><b>如不能正常播放，请下列地址复制到西瓜影音中！</b></div>
+			<div style="font-size:18px;color:red"><b>西瓜下载地址：<u><a href="${down_url}" onclick="alert('点击右键复制链接！或者复制弹出网页中的链接到西瓜影音')">${mname}（点击右键复制）</a></u></b></div>
 			<div style="clear:both;padding-top:5px;">
 			<!--#include virtual="/ad/content_ad_02.shtml" -->
 			</div>

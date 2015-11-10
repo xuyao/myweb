@@ -18,7 +18,7 @@ function showpic(index,url){
 </script>
 </head>
 <base target= _blank>
-<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false">
+<body>
 	<div class="navbar navbar-fixed-top" style="_position: relative;_z-index: 10000;">
 		<div class="navbar-inner">
 			<div class="container">
@@ -55,7 +55,23 @@ function showpic(index,url){
 	                        </div>
 		</div>
 		<div class="view-main t-5 pl-25 pr-25">
-	    	<div class="view-content" style="margin-top:18px;">${content}</div>
+	    	<div class="view-content" style="margin-top:18px;">${content}
+	    	<!--#include virtual="/ad/content_ad_02.shtml" -->
+	    	<div style="clear:both;padding-top:18px;">
+	    	<#if xunlei??>
+	    	${xunlei}
+	    	</#if>
+	    	<#if xigua??>
+	    	${xigua}
+	    	</#if>
+	    	<#if jj??>
+	    	${jj}
+	    	</#if>
+	    	<#if xf??>
+	    	${xf}
+	    	</#if>
+	    	</div>
+	    	</div>
 	    	<!--#include virtual="/note.shtml" -->
 		</div> 
 	  	<!--[if IE 6]> <a class="follow-btn ie6png mmmzw"></a><![endif]-->
