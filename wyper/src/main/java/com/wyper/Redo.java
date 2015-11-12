@@ -18,7 +18,8 @@ public class Redo {
 	 * 参数2：type 电影类型 m-电影  t-电视剧
 	 * 参数3：电影名称 数据库字段name
 	 * 参数4：mtime 时间用于分目录 20151010
-	 * 例子：com.wyper.Redo www.yxigua.com m 消失的世界  20151010
+	 * 参数5：http://www.yxigua.com/xiguayingyin/75067.html
+	 * 例子：com.wyper.Redo www.yxigua.com m 消失的世界  20151010 http://www.yxigua.com/xiguayingyin/75067.html
 	 * 
 	 * */
 	public static void main(String[] args){
@@ -37,6 +38,9 @@ public class Redo {
     	String mtime = args[3];
     	
     	Movies m = dbService.queryMovies(type, name);
+    	if(args.length==5){
+    		m.setSrc_url(args[4]);
+    	}
     	
 		String src_url = m.getSrc_url();
 		String html_url = m.getHtml_url();
@@ -44,7 +48,7 @@ public class Redo {
 		String[] arr = html_url.split("\\/");
 		String number = arr[arr.length-1];
 		
-		spiderService.parseHtml(wwwName, type, src_url, number, null, mtime, false);
+		spiderService.parseHtml(wwwName, type, src_url, number, null, mtime, false, m);
     	
     	System.exit(0);	
 	}
