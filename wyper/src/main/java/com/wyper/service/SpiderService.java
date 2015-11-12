@@ -55,7 +55,7 @@ public class SpiderService {
 	 * 	isSave 是否保存数据到数据库
 	 * */
 	public void parseHtml(String wwwName, String type, String url, String number, String ctime, 
-			String mtime, boolean isSave){
+			String mtime, boolean isSave, Movies m){
 		Movies movie = new Movies();
 		DownLoad dl = new DownLoad();
 		
@@ -75,6 +75,9 @@ public class SpiderService {
 		Integer id = 0;
 		if(isSave){
 			id = dbService.saveMovies(movie);
+		}else{
+			if(m!=null)
+				id = m.getId();
 		}
 		//生成文件并入数据库
 		freeMarkerService.genHtml(number+".html", movie, d, dl);

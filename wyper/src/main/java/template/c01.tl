@@ -93,7 +93,7 @@ function showpic(index,url){
 				</div></a> 
 	    	</div>
 	    	<div style="margin-top: 3px; margin-left: 20px;" class="pull-right">
-	    		<iframe width="136" scrolling="no" height="24" frameborder="0" src="http://widget.weibo.com/relationship/followbutton.php?language=zh_cn&amp;width=116&amp;height=24&amp;uid=5747051749&amp;style=2&amp;btn=red&amp;dpc=0" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+	    		<iframe width="136" scrolling="no" height="24" frameborder="0" src="http://widget.weibo.com/relationship/followbutton.php?language=zh_cn&amp;width=116&amp;height=24&amp;uid=2117966477&amp;style=2&amp;btn=red&amp;dpc=0" border="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
 	    	</div>					
 	    </div>
 	</div>

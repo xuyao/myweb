@@ -47,7 +47,7 @@ public class One {
 		else
 			number = NumberTools.randomNumber(3);//随机生成3位数字做文件名
 		
-		spiderService.parseHtml(wwwName, type, url, number, ctime, null, true);
+		spiderService.parseHtml(wwwName, type, url, number, ctime, null, true, null);
 		
     	System.exit(0);
     }
