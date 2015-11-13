@@ -14,6 +14,8 @@ public class Mdown {
 	
 	private String down_url;//视频ftp下载之类的协议路径
 	
+	private String description;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -60,6 +62,14 @@ public class Mdown {
 
 	public void setHtml_url(String html_url) {
 		this.html_url = html_url;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

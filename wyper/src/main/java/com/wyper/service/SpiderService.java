@@ -128,6 +128,8 @@ public class SpiderService {
     	list = dbService.queryMdown("tb_xf", m.getId());
     	downloadHtmlService.xfHtml(m, list, dl);
 
+    	downloadHtmlService.returnDescription(m);
+		
     	freeMarkerService.genHtml(m, dl);
     	
 	}

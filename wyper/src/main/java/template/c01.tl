@@ -1,8 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>${name} 51电影,百度影音,迅雷,西瓜影音,吉吉影音,电影播放下载</title>
-<!--#include virtual="/keyword.shtml"--><!--#include virtual="/css_js.shtml"-->
+<title>${name}_电影下载种子资源网盘下载高清在线_剧情介绍_迅雷西瓜吉吉影音</title>
+<meta name="keywords" content="${name},${name}下载,${name}在线观看,${name}高清下载" />
+<meta name="description" content="${description}" />
+<!--#include virtual="/keyword_detail.shtml"-->
+<!--#include virtual="/css_js.shtml"-->
 <link rel="stylesheet" type="text/css" href="/style/info.css"/>
 <script src="/js/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/down.js" type="text/javascript" charset="utf-8"></script>

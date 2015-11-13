@@ -1,16 +1,21 @@
 package com.wyper.service;
 
+import java.util.Iterator;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wyper.po.Mdown;
 import com.wyper.po.Movies;
 import com.wyper.util.PropertisUtil;
+import com.wyper.vo.DownLoad;
 import com.wyper.vo.JJ;
 import com.wyper.vo.Xigua;
-import com.wyper.vo.DownLoad;
 
 @Service
 public class DownloadHtmlService {
@@ -50,6 +55,8 @@ public class DownloadHtmlService {
 	    		html.append("<a href='"+md.getHtml_url()+"'><u>"+md.getMname()+"</u></a>&nbsp;&nbsp;");
 				Xigua xigua = new Xigua();
 				xigua.setUrl(md.getDown_url());
+				returnDescription(m);
+				md.setDescription(m.getDescription());
 				//生成西瓜最终页
 	    		freeMarkerService.genXiguaHtml(PropertisUtil.get("www.path")+md.getHtml_url(), md, xigua);
 	    	}
@@ -70,6 +77,8 @@ public class DownloadHtmlService {
 	    		html.append("<a href='"+md.getHtml_url()+"'><u>"+md.getMname()+"</u></a>&nbsp;&nbsp;");
 				JJ jj = new JJ();
 				jj.setJjvod_url(md.getDown_url());
+				returnDescription(m);
+				md.setDescription(m.getDescription());
 	    		freeMarkerService.genJJHtml(PropertisUtil.get("www.path")+md.getHtml_url(), md, jj);
 	    	}
 			
@@ -96,5 +105,24 @@ public class DownloadHtmlService {
 	}
 	
 	
+	//搞定description
+	public void returnDescription(Movies movie){
+		Document contents = Jsoup.parse(movie.getContent());
+		Elements econtent = contents.select("p");
+		for(Iterator it = econtent.iterator();it.hasNext();){
+			Element e = (Element)it.next();
+			String description = e.text();
+			description=description.replaceAll("《", "");
+			description=description.replaceAll("》", "");
+			description=description.replaceAll("　", "");
+			description=description.replaceAll(" ", "");
+			if(description.contains(movie.getName())){
+				if(description.length()>300)
+					movie.setDescription(description.substring(0, 300));
+				else
+					movie.setDescription(description);
+			}
+		}
+	}
 	
 }

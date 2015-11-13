@@ -30,6 +30,7 @@ public class FreeMarkerService {
 		args.put("xigua", dl.getXigua());
 		args.put("jj", dl.getJj());
 		args.put("xf", dl.getXf());
+		args.put("description", movie.getDescription());
 		args.put("html_url", "http://" + PropertisUtil.get("www.url") + movie.getHtml_url());
 		FreeMarkerUtil.crateFile(args, "c01.tl", PathUtil.path(d) + File.separator + filename, true);
 	}
@@ -43,6 +44,7 @@ public class FreeMarkerService {
 		args.put("xigua", dl.getXigua());
 		args.put("jj", dl.getJj());
 		args.put("xf", dl.getXf());
+		args.put("description", movie.getDescription());
 		args.put("html_url", "http://" + PropertisUtil.get("www.url") + movie.getHtml_url());
 		FreeMarkerUtil.crateFile(args, "c01.tl", PropertisUtil.get("www.path") + movie.getHtml_url(), true);
 	}
@@ -56,6 +58,7 @@ public class FreeMarkerService {
 		args.put("content", xigua.toString());
 		args.put("down_url", mdown.getDown_url());
 		args.put("mname", mdown.getMname());
+		args.put("description", mdown.getDescription());
 		args.put("html_url", "http://" + PropertisUtil.get("www.url") + mdown.getHtml_url());
 		FreeMarkerUtil.crateFile(args, "c01_xg.tl", path_filename, true);
 	}
@@ -68,6 +71,7 @@ public class FreeMarkerService {
 		args.put("content", jj.toString());
 		args.put("down_url", mdown.getDown_url());
 		args.put("mname", mdown.getMname());
+		args.put("description", mdown.getDescription());
 		args.put("html_url", "http://" + PropertisUtil.get("www.url") + mdown.getHtml_url());
 		FreeMarkerUtil.crateFile(args, "c01_jj.tl", path_filename, true);
 	}

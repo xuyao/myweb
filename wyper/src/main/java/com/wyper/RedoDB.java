@@ -19,7 +19,7 @@ public class RedoDB {
 	 * 
 	 * 参数1：type 电影类型 m-电影  t-电视剧
 	 * 参数2：电影名称 数据库字段name
-	 * 例子：com.wyper.RedoDB m 消失的世界  或者 com.wyper.RedoDB m 
+	 * 例子：com.wyper.RedoDB m 侏罗纪世界  或者 com.wyper.RedoDB m 
 	 * 
 	 * */
 	public static void main(String[] args){

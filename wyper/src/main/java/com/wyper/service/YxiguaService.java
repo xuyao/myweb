@@ -117,6 +117,7 @@ public class YxiguaService {
 		
 		//内容简介
 		html.append("<p>").append(doc.select(".vod_content").text().replaceAll("一个西瓜电影网", "51电影网")+"</p>\n");
+		movie.setContent(html.toString());
 		
 		/** 下载链接  */
 		List<Mdown> mdownList = new ArrayList<Mdown>();
@@ -183,10 +184,9 @@ public class YxiguaService {
 
 		
 		movie.setPic_url(PathUtil.rltUrl(d)+number+"00.jpg");
-		movie.setContent(html.toString());
 		movie.setSrc_url(url);//源url
 		movie.setHtml_url(PathUtil.rltUrl(d) + number+".html");
-		
+		downloadHtmlService.returnDescription(movie);
 		System.out.println(movie.getHtml_url());
 		return movie;
 	}

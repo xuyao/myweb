@@ -18,7 +18,7 @@ public class Movies {
 	
 	private String ctime;
 	
-	
+	private String description;
 
 	public Integer getId() {
 		return id;
@@ -82,6 +82,14 @@ public class Movies {
 
 	public void setCtime(String ctime) {
 		this.ctime = ctime;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

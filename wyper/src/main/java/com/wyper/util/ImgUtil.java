@@ -48,4 +48,13 @@ public class ImgUtil {
 		}
 		
 
+		//args[0]源文件  args[1]压缩文件
+		public static void main(String[] args){
+			try {
+				new ImgUtil().resize(new File(args[0]), args[1], 131, 203);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 }

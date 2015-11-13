@@ -26,7 +26,7 @@ public class FreeMarkerUtil {
     private static String appPath = null;
     
     /** 编码格式 UTF-8 */
-    private static final String ENCODING = "UTF-8";
+    private static final String ENCODING = "utf-8";
 
     /** FreeMarker配置 */
     private static Configuration config = new Configuration();
