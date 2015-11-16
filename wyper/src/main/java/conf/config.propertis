@@ -2,7 +2,6 @@ www.url=www.51per.com
 www.path=/home/www/
 www.path.mlist=/home/www/list/l.shtml
 www.path.tlist=/home/www/list/l_tv.shtml
-#tl.content.path=/home/work/template
-tl.content.path=E:\\workspace\\myweb\\wyper\\src\\main\\java\\template
-
+tl.content.path=/home/work/template
 output=/home/www/info/l.txt
+sitemap=/home/www/info/sitemap.txt

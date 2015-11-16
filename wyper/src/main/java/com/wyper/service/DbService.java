@@ -123,4 +123,26 @@ public class DbService {
 		return list;
 	}
 	
+	
+	//查询电影tb_movies表
+	public List<Movies> listMovies(Integer limit){
+		List<Movies> list = jdbcTemplate.query("select id, src_url, name, type,content, html_url, pic_url, "
+				+ "ctime from tb_movies order by ctime desc limit ?", 
+				new Object[]{limit}, new RowMapper<Movies>(){
+			public Movies mapRow(ResultSet rs, int index) throws SQLException {  
+				Movies movies = new Movies();
+				movies.setId(rs.getInt("id"));
+				movies.setSrc_url(rs.getString("src_url"));
+				movies.setName(rs.getString("name"));
+				movies.setType(rs.getString("type"));
+				movies.setContent(rs.getString("content"));
+				movies.setHtml_url(rs.getString("html_url"));
+				movies.setPic_url(rs.getString("pic_url"));
+				movies.setCtime(rs.getString("ctime"));
+                return movies;
+            }
+		});
+		return list;
+	}
+	
 }

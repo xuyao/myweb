@@ -35,7 +35,7 @@ public class SpiderService {
 	public void listHtml(String type){
 		System.out.println("生成"+type+" list列表...");
 		List<Movies> list = null;
-		list = dbService.listMovies(type, 28);
+		list = dbService.listMovies(type, 56);
 		String path = "";
 		if("m".equals(type)){
 			path = PathUtil.listMoviesPath();
