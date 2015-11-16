@@ -26,7 +26,7 @@ public class List {
     		System.exit(0);
     	}
     	String type = args[0];//m-电影  t-电视剧tv
-		spiderService.listHtml(type);
+		spiderService.listHtml(type, 56);
 		
     	System.exit(0);
     }

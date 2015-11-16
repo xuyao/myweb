@@ -36,7 +36,6 @@ public class PathUtil {
 	public static String listMoviesPath(){
 		String path = PropertisUtil.get("www.path.mlist");
 		return path;
-		
 	}
 	
 	/* 电视剧list文件生成路径path */
@@ -44,6 +43,18 @@ public class PathUtil {
 		String path = PropertisUtil.get("www.path.tlist");
 		return path;
 		
+	}
+	
+	/* 真正的列表，不是碎片 */
+	public static String listMLPath(){
+		String path = PropertisUtil.get("www.path.mllist");
+		return path;
+	}
+	
+	/* 真正的列表，不是碎片 */
+	public static String listTLPath(){
+		String path = PropertisUtil.get("www.path.tllist");
+		return path;
 	}
 	
 }

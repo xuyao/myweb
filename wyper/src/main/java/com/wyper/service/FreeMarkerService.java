@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.wyper.po.Mdown;
 import com.wyper.po.Movies;
+import com.wyper.util.DateUtil;
 import com.wyper.util.FreeMarkerUtil;
 import com.wyper.util.PathUtil;
 import com.wyper.util.PropertisUtil;
@@ -84,5 +85,21 @@ public class FreeMarkerService {
 		FreeMarkerUtil.crateFile(args, "l.tl", path, true);
 	}
 	
+	
+	public void genListHtml(String type, List<Movies> list, String path){
+		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
+		Map<String, Object> args = new HashMap<String, Object>(); 
+		args.put("ll", list);
+		args.put("type", type);
+		FreeMarkerUtil.crateFile(args, "ml.tl", path, true);
+	}
+	
+	public void genSiteMap(List<Movies> list){
+		FreeMarkerUtil.initFreeMarker(PropertisUtil.get("tl.content.path"));
+		Map<String, Object> args = new HashMap<String, Object>(); 
+		args.put("ll", list);
+		args.put("date", DateUtil.format(new Date(), "yyyy-MM-dd"));
+		FreeMarkerUtil.crateFile(args, "sitemap.tl", PropertisUtil.get("sitemap"), true);
+	}
 	
 }

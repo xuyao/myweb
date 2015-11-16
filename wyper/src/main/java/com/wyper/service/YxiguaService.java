@@ -90,7 +90,9 @@ public class YxiguaService {
 				if(!StringUtils.isEmpty(picurl)){
 					System.out.println("download...   "+picurl);
 					/* 第一个文章页图片，用01，00是给列表用的*/
-					DownUtil.download(e.select("img").attr("src"),number+"0"+index_num+".jpg", PathUtil.path(d));//
+					String imgUrl = e.select("img").attr("src");
+					if(imgUrl.contains("jpg"))
+						DownUtil.download(imgUrl, number+"0"+index_num+".jpg", PathUtil.path(d));//
 					e.select("img").attr("src", PathUtil.absUrl(d)+number+"0"+index_num+".jpg");
 					e.select("img").attr("width", "300");
 					e.select("img").attr("height", "410");

@@ -48,6 +48,7 @@ public class Redo {
 		String[] arr = html_url.split("\\/");
 		String number = arr[arr.length-1];
 		
+		System.out.println(src_url);
 		spiderService.parseHtml(wwwName, type, src_url, number, null, mtime, false, m);
     	
     	System.exit(0);	

@@ -32,22 +32,30 @@ public class SpiderService {
 	DownloadHtmlService downloadHtmlService;
 	
 	//生成list列表
-	public void listHtml(String type){
+	public void listHtml(String type, Integer number){
 		System.out.println("生成"+type+" list列表...");
 		List<Movies> list = null;
-		list = dbService.listMovies(type, 28);
+		list = dbService.listMovies(type, number);
 		String path = "";
+		String typeName = "";
+		String pathList = "";
 		if("m".equals(type)){
 			path = PathUtil.listMoviesPath();
+			typeName = "电影下载";
+			pathList = PathUtil.listMLPath();
 		}
 		else if("t".equals(type)){
 			path = PathUtil.listTVPath();
+			typeName = "电视剧下载";
+			pathList = PathUtil.listTLPath();
 		}
 		else
 			System.out.println("参数错误，请输入m或者t！");
 		
 		freeMarkerService.genMoviesListHtml(list, path);
 		
+		list = dbService.listMovies(type, 9999);
+		freeMarkerService.genListHtml(typeName, list, pathList);
 	}
 	
 	
