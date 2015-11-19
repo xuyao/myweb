@@ -4,6 +4,7 @@ www.path.mlist=/home/www/list/l.shtml
 www.path.tlist=/home/www/list/l_tv.shtml
 www.path.mllist=/home/www/list/ml.html
 www.path.tllist=/home/www/list/tl.html
+>>>>>>> refs/remotes/origin/master
 tl.content.path=/home/work/template
 output=/home/www/info/l.txt
 sitemap=/home/www/info/sitemap.txt
