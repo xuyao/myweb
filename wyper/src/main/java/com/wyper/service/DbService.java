@@ -17,12 +17,28 @@ import org.springframework.stereotype.Service;
 
 import com.wyper.po.Mdown;
 import com.wyper.po.Movies;
+import com.wyper.util.DateUtil;
 
 @Service
 public class DbService {
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
+	
+	//更新电影对象
+	public void updateMovies(final Movies movie){
+		 jdbcTemplate.update(new PreparedStatementCreator() {  
+		        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {  
+		            String sql = "update tb_movies set src_url=?,ctime=? where id=?";   
+		               PreparedStatement ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);  
+		               ps.setString(1, movie.getSrc_url());
+		               ps.setString(2, DateUtil.getNowformatLongPattern());
+		               ps.setInt(3, movie.getId());
+		               return ps;  
+		        }  
+		    });  
+	}
 	
 	
 	//保存电影返回id

@@ -86,6 +86,7 @@ public class SpiderService {
 		}else{
 			if(m!=null)
 				id = m.getId();
+			dbService.updateMovies(m);
 		}
 		//生成文件并入数据库
 		freeMarkerService.genHtml(number+".html", movie, d, dl);
