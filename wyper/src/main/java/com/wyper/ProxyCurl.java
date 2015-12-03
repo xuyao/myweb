@@ -19,10 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ProxyCurl {
 	
-	private static ApplicationContext context;
-	
 	public static void main(String[] args){
-		context = new ClassPathXmlApplicationContext("classpath:conf/applicationContent.xml");
 		
 //		HttpClient httpClient = new DefaultHttpClient();
 //		HttpHost httpHost = new HttpHost("http://www.ip138.com/ips138.asp?ip=218.241.108.40&action=2");
@@ -30,16 +27,17 @@ public class ProxyCurl {
 
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
         CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
-        HttpHost target = new HttpHost("www.59178.com/ip.asp", 80, "http");
-        HttpHost proxy = new HttpHost("202.106.16.36", 3128, "http");
+        HttpHost target = new HttpHost("www.whatismyip.com.tw", 80, "http");
+        HttpHost proxy = new HttpHost("60.211.60.89", 8888, "http");
         RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
 
-        HttpGet httpGet = new HttpGet("http://www.59178.com/ip.asp");
+        HttpGet httpGet = new HttpGet("http://www.whatismyip.com.tw/");
         httpGet.setConfig(config);
 //        List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 //        formparams.add(new BasicNameValuePair("ip", "218.241.108.40"));
 //        formparams.add(new BasicNameValuePair("action", "2"));
 //        UrlEncodedFormEntity entity;
+        
         try {
 //            entity = new UrlEncodedFormEntity(formparams, "UTF-8");
 //            httpGet.setEntity(entity);
